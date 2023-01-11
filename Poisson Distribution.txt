@@ -1,0 +1,47 @@
+#Poisson Distribution
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+pi_default = 3.14159265
+
+array_x = []
+array_y = []
+differences = []
+
+def estimation_of_pi():
+    
+    in_circle = 0
+    in_square = 0
+    for i in range(0, 1000000000):
+        
+        x = np.random.poisson()
+        y = np.random.poisson() 
+        
+        array_x.append(x)
+        array_y.append(y)
+        
+        a = (x*x + y*y)**0.5
+        
+        if a < 1:
+            in_circle += 1
+        in_square += 1
+        
+    return 4*in_circle/in_square
+
+result_array = [estimation_of_pi() for _ in range(1000)]
+
+for j in result_array:
+    m = abs(pi_default-j)
+    differences.append(m)
+
+    o = sum(differences)/len(differences)
+
+plt.hist(array_x, edgecolor="orange", color="purple", bins = 100)
+plt.hist(array_y, edgecolor="red", color="pink", bins = 100)
+
+plt.legend(['X Values', 
+            'Y Values'])
+plt.title("Poisson Distribution")
+plt.xlabel("X and Y Values")
+plt.ylabel("Frequency")
